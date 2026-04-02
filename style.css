@@ -1,0 +1,77 @@
+
+/* Need to set the body's margin to 0 so the weather container centers correctly */
+body {
+    margin: 20px;
+
+    /* Adding the gradient background */
+    background: linear-gradient(-45deg, #23bef7, #ee7752);
+	background-size: 200% 200%;
+	animation: gradient 5s ease infinite;
+	height: 100vh;
+}
+
+/* For the gradient animated background */
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+/* Font pairing for the cards */
+.ovo-regular {
+  font-family: "Ovo", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.mulish {
+  font-family: "Mulish", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+
+/* Creating a fancy button */
+button {
+  font-family: "DM Serif Display", serif;
+  font-size: 25px;
+  
+  color: #090909;
+  font-size: 18px;
+  border-radius: 0.5em;
+  background: #e8e8e8;
+  cursor: pointer;
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s;
+  box-shadow: 1px 1px 2px #c5c5c5, -1px -1px 2px #ffffff;
+  
+  padding: 10px;
+  margin-bottom: 15px;
+  margin-top: 20px;
+}
+
+button:active {
+  color: #666;
+  box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+}
+
+#DBZ_card_container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ************************************************** */
+/* Media Query to change the container flex direction */
+/* ************************************************** */
+@media screen and (min-width: 1300px) {
+    #DBZ_card_container {
+        flex-direction: row;
+    }
+}
