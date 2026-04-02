@@ -1,7 +1,7 @@
 
 /* Need to set the body's margin to 0 so the weather container centers correctly */
 body {
-    margin: 20px;
+    /* margin: 20px; */
 
     /* Adding the gradient background */
     background: linear-gradient(-45deg, #23bef7, #ee7752);
@@ -41,6 +41,8 @@ body {
 button {
   font-family: "DM Serif Display", serif;
   font-size: 25px;
+  display: flex;
+  align-items: center;
   
   color: #090909;
   font-size: 18px;
@@ -52,7 +54,7 @@ button {
   box-shadow: 1px 1px 2px #c5c5c5, -1px -1px 2px #ffffff;
   
   padding: 10px;
-  margin-bottom: 15px;
+  margin: 0 auto;
   margin-top: 20px;
 }
 
@@ -64,6 +66,7 @@ button:active {
 #DBZ_card_container {
     display: flex;
     flex-direction: column;
+    /* margin: 0 auto; */
 }
 
 
