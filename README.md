@@ -1,25 +1,19 @@
 # is120-hw11-Spencer-Kimball
 IS 120 Homework 11
 
-Using your selected API, build a page that displays multiple cards from a list of selected items returned by the API.
-
-This should be generated from a single API call that returns a list of objects.
-Feel free to hardcode query parameters here as well if your API allows them.
-After your card display is working correctly, you will need to add functionality for a new group of favorite cards.
-
-This will be a separate display above the list of cards you have already grabbed from the API. Add a condition to hide this display if there are no favorites
-You will not need another API call, you are already fetching the data once and can use that to help build your favorite cards
-You will likely have an array of favorites that holds the names or ID numbers for each of your favorite cards
-It is up to you how to get cards into your favorites array (text input to get favorite name, buttons on each card to add to favorites, etc.)
-Duplication of cards in your favorite and normal sections is okay
-Your favorites array should be stored in local storage so the cards persist after closing the page
-Include minimal styling to make your cards look presentable
-Note: For this entire homework, you will only need ONE API call. It is important for you to consider performance, especially when you're using someone else's API.
-
 In your README.md include the following:
 
-Why is it important that we only make one API call for this page? How does that affect you as a frontend developer and how does that affect the API developers?
-Why is local storage useful in this scenario? Can you think of other instances where it would be useful?
-What would break if a user's favorites referenced an item the API no longer returns? How could you fix that?
-Publish using GitHub pages and include the live URL in your repo about section. Submit the GitHub repo URL in LearningSuite.
+**Why is it important that we only make one API call for this page? How does that affect you as a frontend developer and how does that affect the API developers?**
+
+Making only 1 API call limits me as the frontend developer since this specific API only returned the first 10 characters that were listed as characters, and even if you changed the indeces, it would only return a max of 10. This limit doesn't make as much sense since it was still only 1 API call. However, it makes sense that we should only do 1 API call at a time so that their systems aren't overloaded. 
+
+**Why is local storage useful in this scenario? Can you think of other instances where it would be useful?**
+
+Local storage is useful because if you only have a certain number of API calls that you are allowed, then you can make the 1 API call and then store the information in local storage so you don't have to make more calls to the API.
+
+Local storage would be useful for someone's cart (i.e. amazon or walmart) where they are not logged into an account yet, but they are still on the guest mode. That they could come back to the website without signing in and all of the items they had added to their cart could be saved.
+
+**What would break if a user's favorites referenced an item the API no longer returns? How could you fix that?**
+
+Currently I have the favorites stored as local storage so if the referenced item dissapeared from their website's information it would still show up on my page until the local storage was wiped or it was unselected from the favorites list. At that point refreshing the page would remove it from the general section since only the favorites are stored in local storage.
 

@@ -1,25 +1,7 @@
-// Set a container equal to the div container for the new DBZ Cards
+// Set a container equal to the div container for the new DBZ Cards and 
+// favorite container
 let dbz_container = document.querySelector("#DBZ_card_container")
-
-// Set variables for the favorite button and the heart image
-let fav_button;
-let heart_img;
-
-// Define variables to be used in function for loop so we don't have
-// to define the variable every iteration of the loop
-let curr_dbz_character;
-let element;
-let curr_image;
-let dbz_name_header;
-let dbz_stats;
-
-//// Set the variables equal to the api request string for each character
-let goku_api = "https://dragonball-api.com/api/characters/1";
-let vegeta_api = "https://dragonball-api.com/api/characters/2"
-let piccolo_api = "https://dragonball-api.com/api/characters/3"
-let jiren_api = "https://dragonball-api.com/api/characters/38"
-
-api_calls_list = [goku_api, vegeta_api, piccolo_api, jiren_api]
+let js_fav_container = document.querySelector("#fav_container");
 
 // Get API Data
 async function request_api_data(api_fetch) {
@@ -28,36 +10,29 @@ async function request_api_data(api_fetch) {
     return data;
 }
 
-// Declare favorites list
-let fav_list = [];
-
-// Add to favorites function
-function add_to_favs(new_name_to_add) {
-    fav_list = fav_list.push(new_name_to_add);
-    localStorage.setItem(curr_dbz_character.id, curr_dbz_character.name);
-    // console.log(fav_list);
-    console.log(localStorage);
-}
-
 // Store all of the buttons
 let allButtons = [];
 let allCards = [];
 
 // Iterates through the api calls list to append the created div cards
 // to the div container
-async function get_api_data(api_calls_list) {
-    for(let api_call of api_calls_list) {
+async function get_api_data() {
+    // Only one api call
+    let one_api_call = "https://dragonball-api.com/api/characters"
+    let all_api_data = await request_api_data(one_api_call);
+
+    for (let curr_dbz_character of all_api_data.items) {
         // Create a card element for each of the characters received
         // from the API
-        element = document.createElement("div");
+        let element = document.createElement("div");
 
-        // Wait for the request to complete to get the information
-        // from the API
-        curr_dbz_character = await request_api_data(api_call);
-        
         // Create elements to put the information into the element
-        dbz_name_header = document.createElement("h2");
-        dbz_stats = document.createElement("h3");
+        let dbz_name_header = document.createElement("h2");
+        let dbz_stats = document.createElement("h3");
+
+        // Set variables for the favorite button and the heart image
+        let fav_button = document.createElement("button");
+        let heart_img = document.createElement("img");
 
         // Set some basic css styling via js code
         element.style.backgroundColor = "rgb(173, 172, 172)";
@@ -75,14 +50,47 @@ async function get_api_data(api_calls_list) {
         dbz_name_header.style.fontFamily = "Ovo";
 
         // Like Button creation with its image
-        fav_button = document.createElement("button");
-        heart_img = document.createElement("img");
         heart_img.src = "heart.png";
         heart_img.style.height = "30px";
         heart_img.style.width = "30px";
         
         // Append the Favorite Button to the current card
         fav_button.appendChild(heart_img);
+
+        // Capture the current character info
+        let charId = curr_dbz_character.id;
+
+
+        // Set these names to variables in the function so they can be
+        //  stored and be different per for loop iteration
+        let charName = curr_dbz_character.name;
+        let jsonFull = JSON.stringify(curr_dbz_character);
+
+        // ************************************************
+        // Working on the array of favorites, to add a card to favorites
+        // and local storage 
+        // ************************************************
+        fav_button.addEventListener("click", function() {
+            // If the DBZ id is in local storage, then remove it
+            //   and change the heart img to be empty
+            if(localStorage.getItem(charId) !== null) {
+                localStorage.removeItem(charId);
+                heart_img.src = "heart.png";
+
+                // Append the updated card to the container
+                dbz_container.appendChild(element);
+                
+            } else {
+                // If the DBZ id is not in local storage, then add it
+                //  and change the heart img to be filled in
+                localStorage.setItem(charId,jsonFull);
+                heart_img.src = "heart2.png";
+
+                js_fav_container.appendChild(element);
+            }
+            
+            console.log(localStorage);
+        })
 
         // Add the current button to a list of all of the favorite buttons
         allButtons.push(fav_button);
@@ -104,41 +112,39 @@ async function get_api_data(api_calls_list) {
         element.appendChild(dbz_stats);
 
         // Setting the curr image variable to an image object
-        curr_image = document.createElement("img");
+        let curr_image = document.createElement("img");
         curr_image.src = curr_dbz_character.image;
         curr_image.style.height = "200px";
         curr_image.style.width = "100px";
-        curr_image.style.hover 
         
         // Append the image to the current card
         element.appendChild(curr_image);
 
+
         // Add the card to the allCards list for later access
         allCards.push(element);
 
-        // Append the updated card to the container
-        dbz_container.appendChild(element);
+        // Append the updated card to the correct container
+        // depending on if they are found in local storage or not
+        if(localStorage.getItem(charId) !== null) {
+            heart_img.src = "heart2.png";
+            js_fav_container.appendChild(element);
+        } else {
+            dbz_container.appendChild(element);
+        }
 
     }
 }
 
+// Setting a counter variable
 let counter = 0;
 
-//// Call the function with a button click
+//// Call the function with a button click to populate all of the cards
 populate_dbz_cards.addEventListener("click", function() {
     counter += 1;
     if (counter === 1) {
-        get_api_data(api_calls_list);
+        get_api_data();
     }
 });
-
-// Display what is in local storage right at the beginning
-console.log(localStorage);
-
-// Create an event listener to clear the local storage when this button is clicked
-clear_storage_button.addEventListener("click", function() {
-    localStorage.clear();
-    console.log(localStorage);
-})
 
 
